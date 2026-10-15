@@ -1,0 +1,1137 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f35">
+  <title>RuangKarya — Marketplace Mahasiswa</title>
+
+  <style>
+    :root {
+      --green: #173f35;
+      --green2: #286451;
+      --cream: #f7f5ed;
+      --gold: #d9b778;
+      --text: #252b27;
+      --muted: #777e78;
+      --border: #e7e8e1;
+      --white: #fff;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: var(--white);
+    }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    .announcement {
+      background: var(--green);
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #ffffffed;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+    .nav {
+      max-width: 1180px;
+      margin: auto;
+      padding: 15px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      color: var(--green);
+      font-family: Georgia, serif;
+      font-weight: bold;
+      font-size: 25px;
+    }
+    .logo span { color: #b78b45; }
+    .navlinks { display: flex; gap: 22px; font-size: 13px; }
+    .navlinks a:hover { color: var(--green2); }
+    .nav-actions { display: flex; align-items: center; gap: 9px; }
+    .search input {
+      width: 180px;
+      padding: 10px 13px;
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      outline: none;
+    }
+    .btn {
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 15px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .btn-primary { background: var(--green); color: white; }
+    .btn-primary:hover { background: var(--green2); }
+    .btn-light { background: var(--cream); color: var(--green); }
+    .btn-outline {
+      border: 1px solid var(--green);
+      background: transparent;
+      color: var(--green);
+    }
+    .btn:disabled { opacity: .55; cursor: wait; }
+    #accountArea { display: flex; align-items: center; gap: 8px; }
+    #accountLabel {
+      color: var(--green);
+      font-size: 11px;
+      max-width: 150px;
+      overflow-wrap: anywhere;
+    }
+    .cart-button { white-space: nowrap; }
+    .cart-count {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--green);
+      border-radius: 20px;
+      padding: 2px 6px;
+      margin-left: 5px;
+    }
+
+    main { max-width: 1180px; margin: auto; padding: 25px 22px 60px; }
+    .hero {
+      min-height: 350px;
+      padding: 45px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      align-items: center;
+      gap: 30px;
+      background: var(--green);
+      color: white;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(38px, 5vw, 58px);
+      line-height: 1.08;
+      font-weight: 500;
+      margin: 18px 0;
+    }
+    .hero p { color: #dbe6df; font-size: 14px; line-height: 1.8; max-width: 450px; }
+    .hero a {
+      display: inline-block;
+      background: var(--cream);
+      color: var(--green);
+      padding: 13px 18px;
+      border-radius: 25px;
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .hero-art {
+      min-height: 230px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1px solid #ffffff35;
+      border-radius: 50%;
+      background: #ffffff0c;
+      padding: 25px;
+    }
+    .hero-art strong { font-family: Georgia, serif; font-size: 30px; }
+    .hero-art div { color: #dbe6df; font-size: 12px; margin-top: 12px; }
+
+    .benefits {
+      padding: 25px 5px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+    .benefit { display: flex; gap: 10px; align-items: center; }
+    .benefit-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: var(--cream); border-radius: 10px;
+      display: grid; place-items: center; color: var(--green);
+    }
+    .benefit strong { display: block; font-size: 12px; }
+    .benefit small { display: block; color: var(--muted); margin-top: 4px; font-size: 11px; }
+
+    .section { padding-top: 42px; }
+    .section h2 { font: 32px Georgia, serif; color: var(--green); margin: 8px 0; }
+    .section-sub { color: var(--muted); font-size: 13px; line-height: 1.7; }
+    .category-pills { display: flex; gap: 8px; flex-wrap: wrap; margin: 20px 0; }
+    .pill {
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 22px;
+      padding: 9px 14px;
+      font-size: 11px;
+    }
+    .pill.active, .pill:hover { background: var(--green); color: white; }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .product-card {
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: white;
+    }
+    .product-image {
+      height: 200px;
+      display: grid;
+      place-items: center;
+      background: var(--cream);
+      overflow: hidden;
+      color: var(--green);
+    }
+    .product-image img { width: 100%; height: 100%; object-fit: cover; }
+    .placeholder { font: 48px Georgia, serif; }
+    .product-info { padding: 14px; display: flex; flex-direction: column; flex: 1; }
+    .category {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+      color: var(--green2);
+    }
+    .product-info h3 { font: 19px Georgia, serif; margin: 9px 0; }
+    .description { color: var(--muted); font-size: 12px; line-height: 1.6; min-height: 38px; }
+    .stock { color: var(--muted); font-size: 11px; margin-top: 9px; }
+    .product-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; margin-top: 14px; padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .price { color: var(--green); font-size: 13px; font-weight: bold; }
+    .add-btn {
+      width: 34px; height: 34px; border: 0; border-radius: 9px;
+      background: var(--green); color: white; font-size: 20px;
+    }
+    .add-btn:disabled { opacity: .4; }
+    .empty-state { grid-column: 1/-1; text-align: center; padding: 45px 15px; color: var(--muted); }
+
+    .about {
+      margin-top: 45px;
+      background: var(--cream);
+      padding: 35px;
+      border-radius: 15px;
+    }
+    .about h2 { font: 27px Georgia, serif; color: var(--green); }
+    .about p { font-size: 13px; line-height: 1.8; color: var(--muted); }
+    footer { margin-top: 55px; background: #122f28; color: white; padding: 30px 22px; }
+    .footer-inner {
+      max-width: 1180px; margin: auto;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+    }
+    footer p { font-size: 11px; line-height: 1.7; color: #d5e1da; }
+
+    /* Modal login dan daftar akun */
+    .modal {
+      position: fixed; inset: 0; z-index: 50;
+      display: none; align-items: center; justify-content: center;
+      padding: 18px; background: #071a14a8;
+    }
+    .modal.show { display: flex; }
+    .modal-card {
+      width: min(430px, 100%);
+      max-height: 90vh; overflow-y: auto;
+      background: white; border-radius: 17px;
+      padding: 25px; box-shadow: 0 20px 70px #0003;
+    }
+    .modal-header {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 15px;
+    }
+    .modal-header h2 { color: var(--green); font: 27px Georgia, serif; margin: 0; }
+    .modal-header p { color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .modal-close {
+      border: 0; background: var(--cream); border-radius: 50%;
+      width: 33px; height: 33px; font-size: 19px; flex-shrink: 0;
+    }
+    .auth-tabs { display: flex; gap: 8px; margin: 18px 0; }
+    .auth-tabs button { flex: 1; }
+    .auth-form { display: grid; gap: 12px; }
+    .auth-form label { display: block; font-size: 11px; font-weight: bold; margin-bottom: 6px; }
+    .auth-form input {
+      width: 100%; padding: 12px;
+      border: 1px solid var(--border); border-radius: 8px;
+      outline: none;
+    }
+    .auth-form input:focus { border-color: var(--green2); }
+    .auth-message { font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
+    .auth-message.error { color: #b13c36; }
+    .auth-message.success { color: var(--green2); }
+    .auth-note { color: var(--muted); font-size: 11px; line-height: 1.6; margin-top: 15px; }
+    .owner-label {
+      display: inline-block; padding: 4px 7px; border-radius: 20px;
+      color: var(--green); background: #e6efe8; font-size: 10px;
+    }
+
+    /* Keranjang */
+    .overlay {
+      display: none; position: fixed; inset: 0; z-index: 40; background: #0008;
+    }
+    .overlay.show { display: block; }
+    .drawer {
+      width: min(450px, 100%); height: 100%; margin-left: auto;
+      background: white; padding: 22px; display: flex; flex-direction: column;
+      overflow-y: auto;
+    }
+    .drawer-head { display: flex; align-items: center; justify-content: space-between; }
+    .drawer-head h2 { color: var(--green); font: 25px Georgia, serif; }
+    .close-btn {
+      width: 35px; height: 35px; border: 0; border-radius: 50%;
+      background: var(--cream); font-size: 20px;
+    }
+    .cart-items { flex: 1; }
+    .cart-line {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 15px 0; border-bottom: 1px solid var(--border);
+    }
+    .cart-line h4 { margin: 0 0 6px; }
+    .cart-line small { color: var(--muted); font-size: 11px; }
+    .qty-control { display: flex; align-items: center; gap: 8px; margin-top: 9px; }
+    .qty-control button {
+      width: 27px; height: 27px; border: 1px solid var(--border);
+      border-radius: 6px; background: white;
+    }
+    .remove-btn { border: 0; background: none; color: #b13c36; font-size: 11px; }
+    .checkout { border-top: 1px solid var(--border); padding-top: 15px; }
+    .total-row { display: flex; justify-content: space-between; margin-bottom: 14px; }
+    .total-row strong { color: var(--green); font-size: 20px; }
+    .checkout-form { display: grid; gap: 10px; }
+    .checkout-form input, .checkout-form textarea {
+      width: 100%; border: 1px solid var(--border); border-radius: 8px;
+      padding: 11px; outline: none;
+    }
+    .checkout-form textarea { resize: vertical; }
+    .checkout-form button { padding: 13px; }
+    .hint { color: var(--muted); font-size: 10px; line-height: 1.5; }
+
+    .toast {
+      display: none; position: fixed; z-index: 80; bottom: 20px; left: 50%;
+      transform: translateX(-50%); background: #202c26; color: white;
+      border-radius: 9px; padding: 12px 17px; font-size: 12px;
+      max-width: 90%; text-align: center;
+    }
+    .toast.show { display: block; }
+
+    @media(max-width: 900px) {
+      .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .search input { width: 140px; }
+    }
+    @media(max-width: 650px) {
+      .nav { flex-wrap: wrap; padding: 13px; }
+      .navlinks { order: 3; width: 100%; justify-content: center; }
+      .search { display: none; }
+      #accountLabel { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 28px; }
+      .hero-art { min-height: 160px; }
+      .benefits { grid-template-columns: 1fr; }
+      main { padding: 16px 14px 40px; }
+      .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+      .product-image { height: 145px; }
+      .product-info { padding: 10px; }
+      .product-info h3 { font-size: 16px; }
+      .product-bottom { align-items: flex-start; }
+      .about { padding: 24px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">Temukan karya lokal · Dukung wirausaha muda Indonesia</div>
+
+  <header>
+    <nav class="nav">
+      <a class="logo" href="#">Ruang<span>Karya.</span></a>
+
+      <div class="navlinks">
+        <a href="#">Beranda</a>
+        <a href="#katalog">Katalog</a>
+        <a href="#tentang">Tentang Kami</a>
+      </div>
+
+      <div class="nav-actions">
+        <label class="search">
+          <input id="searchInput" type="search" placeholder="Cari produk...">
+        </label>
+        <div id="accountArea">
+          <button class="btn btn-outline" id="openLoginBtn" type="button">Login</button>
+          <button class="btn btn-primary" id="openRegisterBtn" type="button">Daftar</button>
+        </div>
+        <button class="btn btn-primary cart-button" type="button" onclick="openCart()">
+          🛒 <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Kreasi lokal, kualitas pilihan</div>
+        <h1>Ide hebat.<br><span style="color:#d9c7a3">Karya nyata.</span></h1>
+        <p>Temukan produk kreatif dari mahasiswa dan wirausaha muda. Dukung ide lokal dan pesan produk favoritmu dengan mudah.</p>
+        <a href="#katalog">Jelajahi koleksi ↗</a>
+      </div>
+      <div class="hero-art">
+        <div>
+          <strong>RuangKarya</strong>
+          <div>Marketplace Mahasiswa</div>
+          <div style="font-size:45px;margin-top:20px">✳</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="benefits">
+      <div class="benefit">
+        <div class="benefit-icon">✦</div>
+        <div><strong>Produk Pilihan</strong><small>Karya kreatif dan produk lokal</small></div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">✓</div>
+        <div><strong>Pemesanan Mudah</strong><small>Checkout melalui WhatsApp</small></div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">♡</div>
+        <div><strong>Akun Pelanggan</strong><small>Daftar dan masuk dengan email</small></div>
+      </div>
+    </section>
+
+    <section class="section" id="katalog">
+      <div class="eyebrow">Dikurasi untukmu</div>
+      <h2>Jelajahi koleksi</h2>
+      <p class="section-sub">Pilihan produk dari RuangKarya.</p>
+
+      <div class="category-pills" id="categoryPills">
+        <button class="pill active" data-category="Semua">Semua produk</button>
+      </div>
+
+      <div id="productGrid" class="product-grid">
+        <div class="empty-state">Menghubungkan katalog produk...</div>
+      </div>
+    </section>
+
+    <section class="about" id="tentang">
+      <div class="eyebrow">Tentang RuangKarya</div>
+      <h2>Belanja sambil mendukung mimpi.</h2>
+      <p>RuangKarya mempertemukan produk kreatif dengan pelanggan. Pengunjung dapat membuat akun, menjelajahi katalog, dan memesan produk melalui WhatsApp.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="logo" style="color:white">Ruang<span>Karya.</span></div>
+        <p>Karya lokal. Semangat baru.<br>Tempat ide menemukan pasarnya.</p>
+      </div>
+      <div><p>© <span id="year"></span> RuangKarya Marketplace Mahasiswa</p></div>
+    </div>
+  </footer>
+
+  <!-- MODAL LOGIN DAN REGISTRASI -->
+  <div class="modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h2 id="authTitle">Selamat datang</h2>
+          <p id="authSubtitle">Masuk untuk menggunakan akun RuangKarya.</p>
+        </div>
+        <button class="modal-close" id="closeAuthBtn" type="button" aria-label="Tutup">×</button>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="btn btn-primary" id="loginTab" type="button">Login</button>
+        <button class="btn btn-light" id="registerTab" type="button">Daftar akun</button>
+      </div>
+
+      <form class="auth-form" id="authForm">
+        <div id="nameField" hidden>
+          <label for="authName">Nama lengkap</label>
+          <input id="authName" type="text" autocomplete="name" maxlength="100" placeholder="Nama kamu">
+        </div>
+
+        <div>
+          <label for="authEmail">Email</label>
+          <input id="authEmail" type="email" autocomplete="email" required placeholder="nama@email.com">
+        </div>
+
+        <div>
+          <label for="authPassword">Kata sandi</label>
+          <input id="authPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="Minimal 6 karakter">
+        </div>
+
+        <div id="confirmPasswordField" hidden>
+          <label for="authPasswordConfirm">Ulangi kata sandi</label>
+          <input id="authPasswordConfirm" type="password" autocomplete="new-password" minlength="6" placeholder="Ulangi kata sandi">
+        </div>
+
+        <button class="btn btn-primary" id="authSubmitBtn" type="submit">Login</button>
+        <div id="authMessage" class="auth-message" aria-live="polite"></div>
+      </form>
+
+      <p class="auth-note">
+        Gunakan email dan kata sandi milikmu sendiri. Jangan membagikan kata sandi kepada siapa pun.
+      </p>
+    </div>
+  </div>
+
+  <!-- MODAL KERANJANG -->
+  <div class="overlay" id="cartOverlay" onclick="overlayClick(event)">
+    <aside class="drawer" role="dialog" aria-modal="true" aria-label="Keranjang belanja">
+      <div class="drawer-head">
+        <h2>Keranjang belanja</h2>
+        <button class="close-btn" type="button" onclick="closeCart()">×</button>
+      </div>
+
+      <div class="cart-items" id="cartItems">
+        <div class="empty-state">Keranjang masih kosong.</div>
+      </div>
+
+      <div class="checkout">
+        <div class="total-row">
+          <span>Total belanja</span>
+          <strong id="cartTotal">Rp0</strong>
+        </div>
+
+        <form class="checkout-form" id="checkoutForm">
+          <input id="buyerName" type="text" required maxlength="100" placeholder="Nama penerima">
+          <input id="buyerPhone" type="tel" required maxlength="20" placeholder="Nomor WhatsApp">
+          <textarea id="buyerAddress" required maxlength="500" rows="2" placeholder="Alamat lengkap pengiriman"></textarea>
+          <textarea id="buyerNote" maxlength="500" rows="2" placeholder="Catatan pesanan (opsional)"></textarea>
+          <button class="btn btn-primary" id="checkoutBtn" type="submit">Pesan melalui WhatsApp</button>
+          <p class="hint">Periksa kembali alamat dan jumlah produk sebelum mengirim pesanan.</p>
+        </form>
+      </div>
+    </aside>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <!--
+    FIREBASE AUTHENTICATION
+    Isi firebaseConfig dan OWNER_EMAIL pada bagian konfigurasi di bawah.
+  -->
+  <script type="module">
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged,
+      updateProfile
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+    // =====================================================
+    // KONFIGURASI FIREBASE — WAJIB DIISI
+    // Ambil konfigurasi dari Firebase Console > Project settings
+    // =====================================================
+    const firebaseConfig = {
+      apiKey: "ISI_API_KEY_FIREBASE",
+      authDomain: "ISI_PROJECT_ID.firebaseapp.com",
+      projectId: "ISI_PROJECT_ID",
+      appId: "ISI_APP_ID"
+    };
+
+    // Masukkan email akun pemilik website di sini.
+    // Gunakan email yang sama ketika mendaftar atau login.
+    const OWNER_EMAIL = "EMAIL_PEMILIK_KAMU@example.com";
+
+    // Link Google Apps Script produk milikmu.
+    const API_URL =
+      "https://script.google.com/macros/s/AKfycbxDQ_ZmUZk43OhynVHY61gEA1VVLHi9bqImVhJC524YvwuO2DoV7iljcf-leK86FeH9FA/exec";
+
+    // Ganti dengan nomor WhatsApp admin, format 62 tanpa tanda +.
+    const WA_ADMIN = "6281234567890";
+
+    const firebaseReady =
+      firebaseConfig.apiKey !== "ISI_API_KEY_FIREBASE" &&
+      firebaseConfig.projectId !== "ISI_PROJECT_ID" &&
+      firebaseConfig.appId !== "ISI_APP_ID";
+
+    let auth = null;
+    let currentUser = null;
+    let authMode = "login";
+    let products = [];
+    let cart = [];
+    let activeCategory = "Semua";
+    let searchTerm = "";
+
+    const $ = id => document.getElementById(id);
+
+    function toast(message) {
+      $("toast").textContent = message;
+      $("toast").classList.add("show");
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(() => $("toast").classList.remove("show"), 3500);
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;",
+        '"': "&quot;", "'": "&#39;"
+      }[char]));
+    }
+
+    function rupiah(value) {
+      return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        maximumFractionDigits: 0
+      }).format(Number(value) || 0);
+    }
+
+    function showAuth(mode = "login") {
+      setAuthMode(mode);
+      $("authModal").classList.add("show");
+    }
+
+    function hideAuth() {
+      $("authModal").classList.remove("show");
+    }
+
+    function setAuthMode(mode) {
+      authMode = mode;
+      const isRegister = mode === "register";
+
+      $("authTitle").textContent = isRegister ? "Buat akun" : "Selamat datang";
+      $("authSubtitle").textContent = isRegister
+        ? "Daftar untuk membuat akun RuangKarya."
+        : "Masuk ke akun RuangKarya kamu.";
+
+      $("nameField").hidden = !isRegister;
+      $("confirmPasswordField").hidden = !isRegister;
+      $("authName").required = isRegister;
+      $("authPasswordConfirm").required = isRegister;
+      $("authPassword").autocomplete = isRegister ? "new-password" : "current-password";
+
+      $("loginTab").className = isRegister ? "btn btn-light" : "btn btn-primary";
+      $("registerTab").className = isRegister ? "btn btn-primary" : "btn btn-light";
+      $("authSubmitBtn").textContent = isRegister ? "Daftar sekarang" : "Login";
+      $("authMessage").textContent = "";
+      $("authMessage").className = "auth-message";
+    }
+
+    function setAuthMessage(message, type = "") {
+      $("authMessage").textContent = message;
+      $("authMessage").className = "auth-message " + type;
+    }
+
+    function renderAccount(user) {
+      const area = $("accountArea");
+      area.innerHTML = "";
+
+      if (!user) {
+        const login = document.createElement("button");
+        login.className = "btn btn-outline";
+        login.textContent = "Login";
+        login.onclick = () => showAuth("login");
+
+        const register = document.createElement("button");
+        register.className = "btn btn-primary";
+        register.textContent = "Daftar";
+        register.onclick = () => showAuth("register");
+
+        area.append(login, register);
+        return;
+      }
+
+      const email = user.email || "";
+      const isOwner =
+        OWNER_EMAIL.includes("@") &&
+        email.toLowerCase() === OWNER_EMAIL.trim().toLowerCase();
+
+      const info = document.createElement("div");
+      info.id = "accountLabel";
+      info.innerHTML = `
+        <strong>${escapeHTML(user.displayName || email)}</strong><br>
+        ${isOwner
+          ? '<span class="owner-label">Pemilik</span>'
+          : '<span class="owner-label">Pelanggan</span>'}
+      `;
+
+      const logout = document.createElement("button");
+      logout.className = "btn btn-light";
+      logout.textContent = "Keluar";
+      logout.onclick = async () => {
+        try {
+          await signOut(auth);
+          toast("Kamu sudah keluar dari akun.");
+        } catch (error) {
+          toast("Gagal keluar. Silakan coba kembali.");
+        }
+      };
+
+      area.append(info, logout);
+
+      // Isi nama penerima otomatis jika kolom masih kosong.
+      if (!$("buyerName").value) {
+        $("buyerName").value = user.displayName || "";
+      }
+    }
+
+    async function submitAuth(event) {
+      event.preventDefault();
+
+      if (!firebaseReady || !auth) {
+        setAuthMessage(
+          "Firebase belum dikonfigurasi. Isi firebaseConfig di dalam kode terlebih dahulu.",
+          "error"
+        );
+        return;
+      }
+
+      const email = $("authEmail").value.trim();
+      const password = $("authPassword").value;
+      const name = $("authName").value.trim();
+      const confirmPassword = $("authPasswordConfirm").value;
+      const button = $("authSubmitBtn");
+
+      if (authMode === "register" && password !== confirmPassword) {
+        setAuthMessage("Konfirmasi kata sandi tidak cocok.", "error");
+        return;
+      }
+
+      if (authMode === "register" && name.length < 2) {
+        setAuthMessage("Masukkan nama lengkap.", "error");
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Memproses...";
+
+      try {
+        if (authMode === "register") {
+          const credential = await createUserWithEmailAndPassword(
+            auth, email, password
+          );
+
+          await updateProfile(credential.user, { displayName: name });
+
+          setAuthMessage("Pendaftaran berhasil. Akun kamu sudah dibuat.", "success");
+          toast("Akun berhasil dibuat.");
+          hideAuth();
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+          toast("Login berhasil.");
+          hideAuth();
+        }
+
+        $("authForm").reset();
+      } catch (error) {
+        console.error("Kesalahan autentikasi:", error);
+
+        const messages = {
+          "auth/email-already-in-use": "Email ini sudah terdaftar. Silakan login.",
+          "auth/invalid-email": "Format email tidak valid.",
+          "auth/weak-password": "Kata sandi terlalu lemah. Gunakan minimal 6 karakter.",
+          "auth/invalid-credential": "Email atau kata sandi salah.",
+          "auth/user-not-found": "Akun tidak ditemukan. Silakan daftar terlebih dahulu.",
+          "auth/wrong-password": "Kata sandi salah.",
+          "auth/too-many-requests": "Terlalu banyak percobaan. Coba kembali nanti.",
+          "auth/network-request-failed": "Koneksi internet bermasalah."
+        };
+
+        setAuthMessage(
+          messages[error.code] || "Proses gagal: " + (error.message || "Kesalahan tidak diketahui."),
+          "error"
+        );
+      } finally {
+        button.disabled = false;
+        button.textContent = authMode === "register" ? "Daftar sekarang" : "Login";
+      }
+    }
+
+    function normalizeProduct(row, index) {
+      const get = (...keys) => {
+        for (const key of keys) {
+          if (row[key] !== undefined && row[key] !== null && row[key] !== "") {
+            return row[key];
+          }
+        }
+        return "";
+      };
+
+      return {
+        id: String(get("id", "ID", "kode", "Kode") || `P${index + 1}`),
+        nama: String(get("nama", "Nama", "name", "Name", "produk", "Product") || ""),
+        kategori: String(get("kategori", "Kategori", "category", "Category") || "Lainnya"),
+        harga: Number(String(get("harga", "Harga", "price", "Price") || 0).replace(/[^\d.-]/g, "")) || 0,
+        deskripsi: String(get("deskripsi", "Deskripsi", "description", "Description", "keterangan") || ""),
+        foto: String(get("foto", "Foto", "gambar", "Gambar", "image", "Image", "image_url") || ""),
+        stok: Math.max(0, Number(get("stok", "Stok", "stock", "Stock", "jumlah_stok") || 0))
+      };
+    }
+
+    function extractRows(json) {
+      if (Array.isArray(json)) return json;
+      if (json && Array.isArray(json.data)) return json.data;
+      if (json && Array.isArray(json.products)) return json.products;
+      if (json && Array.isArray(json.produk)) return json.produk;
+      return null;
+    }
+
+    async function loadProducts() {
+      const grid = $("productGrid");
+      grid.innerHTML = '<div class="empty-state">Memuat produk dari Google Sheets...</div>';
+
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error("HTTP " + response.status);
+
+        const json = await response.json();
+        const rows = extractRows(json);
+
+        if (!rows) {
+          throw new Error("Respons Apps Script bukan daftar produk yang dikenali.");
+        }
+
+        products = rows.map(normalizeProduct).filter(p => p.nama);
+        renderCategories();
+        renderProducts();
+      } catch (error) {
+        console.error("Gagal memuat produk:", error);
+        grid.innerHTML = `
+          <div class="empty-state">
+            Katalog belum dapat dimuat.<br>
+            Periksa format respons Google Apps Script dan izin akses Web App.
+          </div>`;
+      }
+    }
+
+    function renderCategories() {
+      const holder = $("categoryPills");
+      const categories = [...new Set(products.map(p => p.kategori).filter(Boolean))];
+
+      holder.innerHTML =
+        '<button class="pill active" data-category="Semua">Semua produk</button>' +
+        categories.map(category =>
+          `<button class="pill" data-category="${escapeHTML(category)}">${escapeHTML(category)}</button>`
+        ).join("");
+
+      holder.querySelectorAll(".pill").forEach(button => {
+        button.addEventListener("click", () => {
+          activeCategory = button.dataset.category;
+          holder.querySelectorAll(".pill").forEach(p =>
+            p.classList.toggle("active", p === button)
+          );
+          renderProducts();
+        });
+      });
+    }
+
+    function renderProducts() {
+      const grid = $("productGrid");
+      const filtered = products.filter(p => {
+        const matchesCategory =
+          activeCategory === "Semua" || p.kategori === activeCategory;
+
+        const query = searchTerm.toLowerCase();
+        const matchesSearch = !query ||
+          [p.nama, p.deskripsi, p.kategori]
+            .some(value => String(value || "").toLowerCase().includes(query));
+
+        return matchesCategory && matchesSearch;
+      });
+
+      if (!filtered.length) {
+        grid.innerHTML = '<div class="empty-state">Produk tidak ditemukan.</div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map((p, index) => {
+        const imageHTML = p.foto
+          ? `<img src="${escapeHTML(p.foto)}" alt="${escapeHTML(p.nama)}" loading="lazy" onerror="this.style.display='none'">`
+          : '<div class="placeholder">R.</div>';
+
+        return `
+          <article class="product-card">
+            <div class="product-image">${imageHTML}</div>
+            <div class="product-info">
+              <div class="category">${escapeHTML(p.kategori)}</div>
+              <h3>${escapeHTML(p.nama)}</h3>
+              <div class="description">${escapeHTML(p.deskripsi || "Produk pilihan RuangKarya.")}</div>
+              <div class="stock">Stok: ${p.stok}</div>
+              <div class="product-bottom">
+                <span class="price">${rupiah(p.harga)}</span>
+                <button class="add-btn" data-index="${index}" type="button"
+                  aria-label="Tambah produk" ${p.stok <= 0 ? "disabled" : ""}>+</button>
+              </div>
+            </div>
+          </article>`;
+      }).join("");
+
+      grid.querySelectorAll(".add-btn").forEach((button, index) => {
+        button.addEventListener("click", () => {
+          const product = filtered[index];
+          addToCart(product.id);
+        });
+      });
+    }
+
+    function addToCart(id) {
+      const product = products.find(p => String(p.id) === String(id));
+      if (!product) return;
+
+      if (Number(product.stok) <= 0) {
+        toast("Stok produk sedang habis.");
+        return;
+      }
+
+      const existing = cart.find(item => String(item.id) === String(id));
+      if (existing) {
+        if (existing.qty >= Number(product.stok)) {
+          toast("Jumlah melebihi stok yang tersedia.");
+          return;
+        }
+        existing.qty++;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+
+      renderCart();
+      toast("Produk ditambahkan ke keranjang.");
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(p => String(p.id) === String(id));
+      if (!item) return;
+
+      if (delta > 0 && item.qty >= Number(item.stok)) {
+        toast("Jumlah melebihi stok.");
+        return;
+      }
+
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart = cart.filter(p => String(p.id) !== String(id));
+      }
+      renderCart();
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(p => String(p.id) !== String(id));
+      renderCart();
+    }
+
+    function renderCart() {
+      $("cartCount").textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+      const total = cart.reduce((sum, item) => sum + item.harga * item.qty, 0);
+      $("cartTotal").textContent = rupiah(total);
+
+      if (!cart.length) {
+        $("cartItems").innerHTML = '<div class="empty-state">Keranjang masih kosong.</div>';
+        return;
+      }
+
+      $("cartItems").innerHTML = cart.map(item => `
+        <div class="cart-line">
+          <div>
+            <h4>${escapeHTML(item.nama)}</h4>
+            <small>${rupiah(item.harga)} per produk</small>
+            <div class="qty-control">
+              <button type="button" data-id="${escapeHTML(item.id)}" data-delta="-1">−</button>
+              <strong>${item.qty}</strong>
+              <button type="button" data-id="${escapeHTML(item.id)}" data-delta="1">+</button>
+              <button class="remove-btn" type="button" data-remove="${escapeHTML(item.id)}">Hapus</button>
+            </div>
+          </div>
+          <strong>${rupiah(item.harga * item.qty)}</strong>
+        </div>
+      `).join("");
+
+      $("cartItems").querySelectorAll("[data-delta]").forEach(button => {
+        button.addEventListener("click", () =>
+          changeQty(button.dataset.id, Number(button.dataset.delta))
+        );
+      });
+
+      $("cartItems").querySelectorAll("[data-remove]").forEach(button => {
+        button.addEventListener("click", () => removeFromCart(button.dataset.remove));
+      });
+    }
+
+    function openCart() {
+      $("cartOverlay").classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeCart() {
+      $("cartOverlay").classList.remove("show");
+      document.body.style.overflow = "";
+    }
+
+    function overlayClick(event) {
+      if (event.target === $("cartOverlay")) closeCart();
+    }
+
+    async function handleCheckout(event) {
+      event.preventDefault();
+
+      if (!cart.length) {
+        toast("Keranjang masih kosong.");
+        return;
+      }
+
+      if (!currentUser) {
+        closeCart();
+        showAuth("login");
+        setAuthMessage("Silakan login atau daftar akun sebelum memesan.", "error");
+        return;
+      }
+
+      const name = $("buyerName").value.trim();
+      const phone = $("buyerPhone").value.trim();
+      const address = $("buyerAddress").value.trim();
+      const note = $("buyerNote").value.trim();
+
+      if (!name || !phone || !address) {
+        toast("Lengkapi data penerima.");
+        return;
+      }
+
+      if (WA_ADMIN === "6281234567890" || !WA_ADMIN) {
+        toast("Ganti WA_ADMIN dengan nomor WhatsApp admin yang benar.");
+        return;
+      }
+
+      const total = cart.reduce((sum, item) => sum + item.harga * item.qty, 0);
+      const orderId = "RK" + Date.now();
+
+      const order = {
+        orderId,
+        date: new Date().toISOString(),
+        customerUid: currentUser.uid,
+        customerEmail: currentUser.email,
+        nama: name,
+        whatsapp: phone,
+        alamat: address,
+        catatan: note,
+        items: cart.map(item => ({
+          id: item.id,
+          nama: item.nama,
+          harga: item.harga,
+          qty: item.qty,
+          subtotal: item.harga * item.qty
+        })),
+        total
+      };
+
+      const message = [
+        "*PESANAN BARU — RUANGKARYA*",
+        "",
+        "Nomor pesanan: " + orderId,
+        "Akun: " + (currentUser.email || ""),
+        "Nama: " + name,
+        "WhatsApp: " + phone,
+        "Alamat: " + address,
+        "",
+        "*Daftar belanja:*",
+        ...order.items.map((item, i) =>
+          `${i + 1}. ${item.nama} (${item.qty}x) = ${rupiah(item.subtotal)}`
+        ),
+        "",
+        "*Total: " + rupiah(total) + "*",
+        "Catatan: " + (note || "-"),
+        "",
+        "Mohon konfirmasi pesanan dan ongkos kirim."
+      ].join("\n");
+
+      const waWindow = window.open("about:blank", "_blank");
+      const button = $("checkoutBtn");
+      button.disabled = true;
+      button.textContent = "Memproses pesanan...";
+
+      try {
+        // Apps Script harus memiliki doPost(e) yang menerima JSON pesanan.
+        // no-cors tidak bisa memastikan server berhasil menyimpan pesanan.
+        fetch(API_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(order)
+        }).catch(error => console.warn("Pengiriman ke Apps Script gagal:", error));
+
+        const waUrl = `https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(message)}`;
+
+        if (waWindow) waWindow.location.href = waUrl;
+        else window.location.href = waUrl;
+
+        cart = [];
+        renderCart();
+        $("checkoutForm").reset();
+        closeCart();
+        toast("WhatsApp dibuka. Pastikan pesanan terkirim ke admin.");
+      } finally {
+        button.disabled = false;
+        button.textContent = "Pesan melalui WhatsApp";
+      }
+    }
+
+    $("openLoginBtn").addEventListener("click", () => showAuth("login"));
+    $("openRegisterBtn").addEventListener("click", () => showAuth("register"));
+    $("closeAuthBtn").addEventListener("click", hideAuth);
+    $("loginTab").addEventListener("click", () => setAuthMode("login"));
+    $("registerTab").addEventListener("click", () => setAuthMode("register"));
+    $("authForm").addEventListener("submit", submitAuth);
+    $("searchInput").addEventListener("input", event => {
+      searchTerm = event.target.value.trim();
+      renderProducts();
+    });
+    $("checkoutForm").addEventListener("submit", handleCheckout);
+    $("year").textContent = new Date().getFullYear();
+
+    if (firebaseReady) {
+      try {
+        const app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+
+        onAuthStateChanged(auth, user => {
+          currentUser = user;
+          renderAccount(user);
+        });
+      } catch (error) {
+        console.error("Firebase initialization error:", error);
+        toast("Firebase gagal dimulai. Periksa konfigurasi.");
+      }
+    } else {
+      $("accountArea").innerHTML =
+        '<button class="btn btn-primary" id="configFirebaseBtn" type="button">Atur Login</button>';
+      $("configFirebaseBtn").addEventListener("click", () => {
+        showAuth("login");
+        setAuthMessage("Isi firebaseConfig di dalam kode dan aktifkan Email/Password di Firebase Console.", "error");
+      });
+    }
+
+    loadProducts();
+    renderCart();
+
+    // Fungsi yang dipakai atribut onclick pada HTML.
+    window.openCart = openCart;
+    window.closeCart = closeCart;
+    window.overlayClick = overlayClick;
+  </script>
+</body>
+</html>
